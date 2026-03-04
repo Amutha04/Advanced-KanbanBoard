@@ -3,15 +3,24 @@ import { renderBoard } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const addTaskBtn = document.getElementById("addTaskBtn");
+  const modal = document.getElementById("taskModal");
+  const openBtn = document.getElementById("addTaskBtn");
+  const closeBtn = document.getElementById("closeModal");
+  const form = document.getElementById("taskForm");
 
-  addTaskBtn.addEventListener("click", () => {
+  openBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
 
-    const title = prompt("Enter task title:");
-    if (!title) return;
+  closeBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
 
-    const description = prompt("Enter task description:");
-    if (!description) return;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("taskTitle").value;
+    const description = document.getElementById("taskDescription").value;
 
     const newTask = {
       id: Date.now().toString(),
@@ -22,6 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addTask(newTask);
     renderBoard();
+
+    form.reset();
+    modal.classList.add("hidden");
   });
 
   renderBoard();

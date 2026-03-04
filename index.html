@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Kanban Board</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <h1>Advanced Kanban Board</h1>
+    <button id="addTaskBtn">+ Add Task</button>
+  </header>
+
+  <main class="board">
+
+    <div class="column" data-status="todo">
+  <h2>Todo</h2>
+
+  <div class="task-list" id="todoList">
+    
+    <div class="task-card">
+      <h4>Sample Task</h4>
+      <p>This is just for layout testing.</p>
+    </div>
+
+  </div>
+</div>
+
+    <div class="column" data-status="in-progress">
+      <h2>In Progress</h2>
+      <div class="task-list" id="inProgressList"></div>
+    </div>
+
+    <div class="column" data-status="done">
+      <h2>Done</h2>
+      <div class="task-list" id="doneList"></div>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

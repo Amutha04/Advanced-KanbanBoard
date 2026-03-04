@@ -1,40 +1,67 @@
-import { addTask } from "./state.js";
-import { renderBoard } from "./ui.js";
+import { addTask, updateTask } from "./state.js";
+import { renderBoard, setFilter, toggleSort } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
   const modal = document.getElementById("taskModal");
-  const openBtn = document.getElementById("addTaskBtn");
-  const closeBtn = document.getElementById("closeModal");
   const form = document.getElementById("taskForm");
 
-  openBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-  });
-
-  closeBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const title = document.getElementById("taskTitle").value;
-    const description = document.getElementById("taskDescription").value;
-
-    const newTask = {
-      id: Date.now().toString(),
-      title,
-      description,
-      status: "todo"
-    };
-
-    addTask(newTask);
-    renderBoard();
-
+  document.getElementById("addTaskBtn").onclick = () => {
     form.reset();
+    document.getElementById("editTaskId").value = "";
+    document.getElementById("modalTitle").innerText = "Add New Task";
+    modal.classList.remove("hidden");
+  };
+
+  document.getElementById("closeModal").onclick = () => {
     modal.classList.add("hidden");
-  });
+  };
+
+  form.onsubmit = e => {
+  e.preventDefault();
+
+  const id = document.getElementById("editTaskId").value;
+
+  let status = "todo";
+
+  if (id) {
+    // Find existing task to preserve status
+    const existingTask = JSON.parse(localStorage.getItem("kanbanTasks"))
+      .find(t => t.id === id);
+
+    status = existingTask.status;
+  }
+
+  const taskData = {
+    id: id || Date.now().toString(),
+    title: taskTitle.value,
+    description: taskDescription.value,
+    dueDate: taskDueDate.value,
+    priority: taskPriority.value,
+    status
+  };
+
+  if (id) {
+    updateTask(taskData);
+  } else {
+    addTask(taskData);
+  }
+
+  modal.classList.add("hidden");
+  renderBoard();
+};
+
+  document.getElementById("filterPriority").onchange = e => {
+    setFilter(e.target.value);
+  };
+
+  document.getElementById("sortBtn").onclick = () => {
+    toggleSort();
+  };
+
+  document.getElementById("darkModeToggle").onclick = () => {
+    document.body.classList.toggle("dark");
+  };
 
   renderBoard();
 });

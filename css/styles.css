@@ -76,3 +76,169 @@ body {
   justify-content: space-between;
   margin-top: 10px;
 }
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: red;
+}
+
+.priority {
+  font-weight: bold;
+}
+
+.priority.low {
+  color: green;
+}
+
+.priority.medium {
+  color: orange;
+}
+
+.priority.high {
+  color: red;
+}
+
+body.dark {
+  background: #1e1e1e;
+  color: white;
+}
+
+body.dark .column {
+  background: #2c2c2c;
+}
+
+body.dark .task-card {
+  background: #3a3a3a;
+}
+
+/* HEADER LAYOUT */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #4f46e5;
+  color: white;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+/* Right side controls */
+.header div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Buttons */
+.header button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+#addTaskBtn {
+  background: #22c55e;
+  color: white;
+}
+
+#addTaskBtn:hover {
+  background: #16a34a;
+}
+
+#sortBtn {
+  background: #f59e0b;
+  color: white;
+}
+
+#sortBtn:hover {
+  background: #d97706;
+}
+
+#darkModeToggle {
+  background: #111827;
+  color: white;
+}
+
+#darkModeToggle:hover {
+  background: #000;
+}
+
+/* Dropdown */
+#filterPriority {
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+/* Board Styling */
+.board {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.column {
+  flex: 1;
+  background: #f3f4f6;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.task-card {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+body.dark {
+  background: #1f2937;
+  color: white;
+}
+
+body.dark .column {
+  background: #374151;
+}
+
+body.dark .task-card {
+  background: #4b5563;
+  color: white;
+}
+
+body.dark .header {
+  background: #111827;
+}
+/* Modal Dark Mode Fix */
+body.dark .modal-content {
+  background: #374151;
+  color: white;
+}
+
+body.dark .modal-content input,
+body.dark .modal-content textarea,
+body.dark .modal-content select {
+  background: #4b5563;
+  color: white;
+  border: 1px solid #6b7280;
+}
+
+body.dark .modal-content input::placeholder,
+body.dark .modal-content textarea::placeholder {
+  color: #d1d5db;
+}

@@ -1,4 +1,4 @@
-import { addTask, updateTask } from "./state.js";
+import { addTask, updateTask, state} from "./state.js";
 import { renderBoard, setFilter, toggleSort } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,11 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let status = "todo";
 
   if (id) {
-    // Find existing task to preserve status
-    const existingTask = JSON.parse(localStorage.getItem("kanbanTasks"))
-      .find(t => t.id === id);
+    // Preserve status safely from state
+    const existingTask = state.tasks.find(t => t.id === id);
 
-    status = existingTask.status;
+    if (existingTask) {
+      status = existingTask.status;
+    }
   }
 
   const taskData = {
@@ -50,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
   modal.classList.add("hidden");
   renderBoard();
 };
-
   document.getElementById("filterPriority").onchange = e => {
     setFilter(e.target.value);
   };

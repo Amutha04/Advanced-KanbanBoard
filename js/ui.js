@@ -20,19 +20,34 @@ export function renderBoard() {
     done: document.getElementById("doneList")
   };
 
+  // Safety check
+  if (!lists.todo || !lists["in-progress"] || !lists.done) {
+    console.error("Column lists not found in HTML!");
+    return;
+  }
+
+  // Clear columns
   Object.values(lists).forEach(list => list.innerHTML = "");
 
   let tasks = [...state.tasks];
 
+  // Filter
   if (currentFilter !== "all") {
     tasks = tasks.filter(t => t.priority === currentFilter);
   }
 
+  // Sort
   if (sortByDate) {
     tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   }
 
+  // Render
   tasks.forEach(task => {
+    if (!task.status || !lists[task.status]) {
+      console.warn("Invalid task status:", task);
+      return; // skip broken tasks
+    }
+
     const card = createCard(task);
     lists[task.status].appendChild(card);
   });
@@ -54,21 +69,24 @@ function createCard(task) {
       </div>
     </div>
     <p>${task.description}</p>
-    <p>📅 ${task.dueDate}</p>
+    <p>📅 ${task.dueDate || "No date"}</p>
     <p class="priority ${task.priority}">
-      ${task.priority.toUpperCase()}
+      ${task.priority?.toUpperCase()}
     </p>
   `;
 
+  // Drag start
   div.addEventListener("dragstart", e => {
     e.dataTransfer.setData("id", task.id);
   });
 
+  // Delete
   div.querySelector(".delete-btn").onclick = () => {
     deleteTask(task.id);
     renderBoard();
   };
 
+  // Edit
   div.querySelector(".edit-btn").onclick = () => {
     document.getElementById("modalTitle").innerText = "Edit Task";
     document.getElementById("editTaskId").value = task.id;
@@ -88,7 +106,11 @@ function enableDrag() {
 
     column.ondrop = e => {
       const id = e.dataTransfer.getData("id");
-      updateTaskStatus(id, column.dataset.status);
+      const newStatus = column.dataset.status;
+
+      if (!newStatus) return;
+
+      updateTaskStatus(id, newStatus);
       renderBoard();
     };
   });

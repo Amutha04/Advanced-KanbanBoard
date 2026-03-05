@@ -1,80 +1,120 @@
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-  background: #f4f6f8;
+  background: #f4f6f9;
+  color: #111827;
+  transition: 0.3s ease;
 }
+
+/* ================= HEADER ================= */
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background: #1e293b;
+  padding: 20px 40px;
+  background: linear-gradient(135deg, #0eddf0, #3033e1);
   color: white;
 }
+
+.header h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.header div {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.header button,
+.header select {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Header Buttons */
+#addTaskBtn {
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+}
+#addTaskBtn:hover {
+  background: #d0d3d1;
+}
+
+#sortBtn {
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+}
+#sortBtn:hover {
+  background: #d0d3d1;
+}
+
+#darkModeToggle {
+  background: #ffffff;
+  color: white;
+}
+#darkModeToggle:hover {
+  background: #d0d3d1;
+}
+
+#filterPriority {
+  background: rgb(255, 255, 255);
+}
+
+/* ================= BOARD ================= */
 
 .board {
   display: flex;
   gap: 20px;
-  padding: 20px;
-  height: calc(100vh - 80px);
+  padding: 30px 40px;
+  height: calc(100vh - 100px);
 }
 
 .column {
   flex: 1;
-  background: #e2e8f0;
-  border-radius: 8px;
+  background: #e5e7eb;
+  border-radius: 14px;
   padding: 15px;
   display: flex;
   flex-direction: column;
 }
 
+.column h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
 .task-list {
-  margin-top: 10px;
   flex: 1;
   overflow-y: auto;
 }
 
+/* ================= TASK CARD ================= */
+
 .task-card {
   background: white;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  cursor: pointer;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: 0.2s ease;
+  cursor: grab;
 }
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hidden {
-  display: none;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+.task-card:hover {
+  transform: translateY(-3px);
 }
 
 .task-header {
@@ -83,129 +123,115 @@ body {
   align-items: center;
 }
 
-.delete-btn {
-  background: none;
+.task-header button {
   border: none;
+  background: transparent;
   cursor: pointer;
-  font-size: 16px;
-  color: red;
+  font-size: 14px;
 }
 
+/* Priority */
 .priority {
-  font-weight: bold;
+  font-weight: 600;
 }
 
-.priority.low {
-  color: green;
-}
+.priority.low { color: #16a34a; }
+.priority.medium { color: #f59e0b; }
+.priority.high { color: #dc2626; }
 
-.priority.medium {
-  color: orange;
-}
+/* ================= MODAL ================= */
 
-.priority.high {
-  color: red;
-}
-
-body.dark {
-  background: #1e1e1e;
-  color: white;
-}
-
-body.dark .column {
-  background: #2c2c2c;
-}
-
-body.dark .task-card {
-  background: #3a3a3a;
-}
-
-/* HEADER LAYOUT */
-.header {
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 20px;
-  background: #4f46e5;
-  color: white;
+  z-index: 1000;
 }
 
-.header h1 {
-  margin: 0;
+.hidden {
+  display: none;
 }
 
-/* Right side controls */
-.header div {
+.modal-content {
+  background: white;
+  width: 400px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Form */
+.modal-content form {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  gap: 14px;
 }
 
-/* Buttons */
-.header button {
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
   transition: 0.2s ease;
 }
 
-#addTaskBtn {
-  background: #22c55e;
-  color: white;
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
 }
 
-#addTaskBtn:hover {
-  background: #16a34a;
+.modal-content textarea {
+  resize: none;
+  height: 80px;
 }
 
-#sortBtn {
-  background: #f59e0b;
-  color: white;
-}
-
-#sortBtn:hover {
-  background: #d97706;
-}
-
-#darkModeToggle {
-  background: #111827;
-  color: white;
-}
-
-#darkModeToggle:hover {
-  background: #000;
-}
-
-/* Dropdown */
-#filterPriority {
-  padding: 7px 10px;
-  border-radius: 6px;
-  border: none;
-}
-
-/* Board Styling */
-.board {
+/* Modal Buttons */
+.modal-actions {
   display: flex;
-  gap: 20px;
-  padding: 20px;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.column {
-  flex: 1;
-  background: #f3f4f6;
-  padding: 15px;
-  border-radius: 10px;
-}
-
-.task-card {
-  background: white;
-  padding: 12px;
-  margin-bottom: 10px;
+.modal-actions button {
+  padding: 8px 14px;
   border-radius: 8px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
+
+.modal-actions button[type="submit"] {
+  background: #4f46e5;
+  color: white;
+}
+.modal-actions button[type="submit"]:hover {
+  background: #4338ca;
+}
+
+#closeModal {
+  background: #e5e7eb;
+}
+#closeModal:hover {
+  background: #d1d5db;
+}
+
+/* ================= DARK MODE ================= */
 
 body.dark {
   background: #1f2937;
@@ -224,21 +250,40 @@ body.dark .task-card {
 body.dark .header {
   background: #111827;
 }
-/* Modal Dark Mode Fix */
+
 body.dark .modal-content {
   background: #374151;
   color: white;
 }
 
-body.dark .modal-content input,
-body.dark .modal-content textarea,
-body.dark .modal-content select {
+body.dark input,
+body.dark textarea,
+body.dark select {
   background: #4b5563;
   color: white;
   border: 1px solid #6b7280;
 }
 
-body.dark .modal-content input::placeholder,
-body.dark .modal-content textarea::placeholder {
+body.dark input::placeholder,
+body.dark textarea::placeholder {
   color: #d1d5db;
+}
+
+
+body.dark #filterPriority {
+  background: #e5e7eb;  
+  color: black;        
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
